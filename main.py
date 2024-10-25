@@ -1,6 +1,6 @@
 import uvicorn
 from datetime import date
-from fastapi import FastAPI, Form, Response
+from fastapi import FastAPI, Form, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from starlette import status
 from model.tipo_usuario import TipoDeUsuario
@@ -24,7 +24,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-db = CreadorDeBasesDeDatosMySql(["database-1.cryms8qe4z2i.us-east-2.rds.amazonaws.com", "admin", "admin123", "bidon_subastas"]).construir()
+db = CreadorDeBasesDeDatosMySql(["localhost", "root", "admin123", "citasapp"]).construir()
 #db = CreadorDeBasesDeDatosTemporales().construir()
 
 
