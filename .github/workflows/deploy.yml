@@ -1,0 +1,34 @@
+jobs:
+  deploy-dev:
+    if: github.ref == 'refs/heads/dev'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Development Server
+        run: |
+          echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
+          chmod 600 ec2_key.pem
+          ssh -i ec2_key.pem -o StrictHostKeyChecking=no ec2-user@18.117.222.220 "cd /path/to/your/app && git pull && sudo systemctl restart your_service"
+
+  deploy-qa:
+    if: github.ref == 'refs/heads/qa'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to QA Server
+        run: |
+          echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
+          chmod 600 ec2_key.pem
+          ssh -i ec2_key.pem -o StrictHostKeyChecking=no ec2-user@18.117.222.220 "cd /path/to/your/app && git pull && sudo systemctl restart your_service"
+
+  deploy-production:
+    if: github.ref == 'refs/heads/production'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Production Server
+        run: |
+          echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
+          chmod 600 ec2_key.pem
+          ssh -i ec2_key.pem -o StrictHostKeyChecking=no ec2-user@18.117.222.220 "cd /path/to/your/app && git pull && sudo systemctl restart your_service"
+
